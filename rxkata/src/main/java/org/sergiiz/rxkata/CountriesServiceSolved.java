@@ -79,17 +79,8 @@ class CountriesServiceSolved implements CountriesService {
 
     @Override
     public Single<Map<String, Long>> mapCountriesToNamePopulation(List<Country> countries) {
-        return Observable.zip(listNameOfEachCountry(countries), listPopulationOfEachCountry(countries), Tuple2::new)
-                .toMap(k -> k.a, v -> v.b);
+        return Observable.fromIterable(countries)
+                .toMap(k -> k.name, v -> v.population);
     }
 
-    private class Tuple2<A, B> {
-        final A a;
-        final B b;
-
-        Tuple2(A a, B b) {
-            this.a = a;
-            this.b = b;
-        }
-    }
 }
